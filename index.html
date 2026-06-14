@@ -1,0 +1,1896 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>யூடியூபில் தொடங்கிய ஒரு அழகான கதை ❤️</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@200;300;400;600;700&family=Dancing+Script:wght@400;600;700&family=Noto+Serif+Tamil:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+<style>
+/* ═══════════════════════════════════════════════════
+   ROOT & RESET
+═══════════════════════════════════════════════════ */
+:root {
+  --rose: #FF1A6C;
+  --crimson: #C0002A;
+  --blush: #FF8FAB;
+  --petal: #FFB3C6;
+  --lavender: #B784FF;
+  --violet: #7B2FBE;
+  --deep-purple: #2D0057;
+  --midnight: #0A0015;
+  --aurora1: #FF1A6C;
+  --aurora2: #B784FF;
+  --aurora3: #FF8FAB;
+  --gold: #FFD700;
+  --warm-white: #FFF5F8;
+  --glass-bg: rgba(255,255,255,0.06);
+  --glass-border: rgba(255,255,255,0.15);
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'Cormorant Garamond', serif;
+  --font-sans: 'Raleway', sans-serif;
+  --font-script: 'Dancing Script', cursive;
+  --font-tamil: 'Noto Serif Tamil', serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--midnight);
+  color: var(--warm-white);
+  font-family: var(--font-body);
+  cursor: none;
+  overflow-x: hidden;
+}
+
+/* ═══════════════════════════════════════════════════
+   CUSTOM CURSOR
+═══════════════════════════════════════════════════ */
+#cursor {
+  position: fixed;
+  width: 20px; height: 20px;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s;
+}
+#cursor svg { width: 100%; height: 100%; }
+#cursor-trail {
+  position: fixed;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,26,108,0.4);
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%, -50%);
+  transition: left 0.12s ease, top 0.12s ease;
+}
+
+/* ═══════════════════════════════════════════════════
+   LOADING SCREEN
+═══════════════════════════════════════════════════ */
+#loading-screen {
+  position: fixed; inset: 0;
+  background: var(--midnight);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+#loading-screen.hidden { opacity: 0; visibility: hidden; }
+.loading-heart {
+  font-size: 4rem;
+  animation: heartbeat 0.8s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px var(--rose));
+}
+.loading-text {
+  font-family: var(--font-script);
+  font-size: 1.5rem;
+  color: var(--petal);
+  margin-top: 1.5rem;
+  letter-spacing: 0.1em;
+}
+.loading-bar-wrap {
+  width: 200px; height: 2px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  margin-top: 2rem;
+  overflow: hidden;
+}
+.loading-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--rose), var(--lavender));
+  width: 0%;
+  border-radius: 2px;
+  animation: loadProgress 2.5s ease forwards;
+}
+@keyframes loadProgress { to { width: 100%; } }
+
+/* ═══════════════════════════════════════════════════
+   CANVAS LAYERS
+═══════════════════════════════════════════════════ */
+#bg-canvas, #petals-canvas, #hearts-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+#bg-canvas { z-index: 0; }
+#petals-canvas { z-index: 1; }
+#hearts-canvas { z-index: 2; }
+
+/* ═══════════════════════════════════════════════════
+   MUSIC PLAYER
+═══════════════════════════════════════════════════ */
+#music-player {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  background: rgba(20,0,40,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,26,108,0.3);
+  border-radius: 20px;
+  padding: 14px 18px;
+  z-index: 1000;
+  display: flex; align-items: center; gap: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 20px rgba(255,26,108,0.2);
+  min-width: 200px;
+  transition: all 0.3s ease;
+}
+#music-player:hover {
+  border-color: rgba(255,26,108,0.6);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6), 0 0 30px rgba(255,26,108,0.35);
+}
+.music-icon { font-size: 1.4rem; animation: spin 4s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.music-info { flex: 1; }
+.music-title { font-family: var(--font-script); font-size: 0.85rem; color: var(--petal); line-height: 1; }
+.music-status { font-size: 0.65rem; color: rgba(255,255,255,0.5); margin-top: 2px; font-family: var(--font-sans); letter-spacing: 0.08em; }
+.music-controls { display: flex; align-items: center; gap: 8px; }
+#play-btn {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--rose), var(--violet));
+  border: none; cursor: pointer; color: white;
+  font-size: 0.9rem; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 12px rgba(255,26,108,0.5);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+#play-btn:hover { transform: scale(1.1); box-shadow: 0 0 20px rgba(255,26,108,0.7); }
+#vol-slider {
+  -webkit-appearance: none;
+  width: 60px; height: 3px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 3px; outline: none; cursor: pointer;
+}
+#vol-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--rose); cursor: pointer;
+}
+.visualizer { display: flex; align-items: flex-end; gap: 2px; height: 20px; }
+.v-bar {
+  width: 3px; background: linear-gradient(to top, var(--rose), var(--lavender));
+  border-radius: 2px; animation: vbar 0.5s ease-in-out infinite alternate;
+}
+.v-bar:nth-child(1) { animation-delay: 0s; }
+.v-bar:nth-child(2) { animation-delay: 0.1s; }
+.v-bar:nth-child(3) { animation-delay: 0.2s; }
+.v-bar:nth-child(4) { animation-delay: 0.15s; }
+.v-bar:nth-child(5) { animation-delay: 0.05s; }
+@keyframes vbar { from { height: 4px; } to { height: 18px; } }
+.visualizer.paused .v-bar { animation-play-state: paused; height: 4px; }
+
+/* ═══════════════════════════════════════════════════
+   LOVE TIMER
+═══════════════════════════════════════════════════ */
+#love-timer {
+  position: fixed;
+  top: 24px; right: 24px;
+  background: rgba(20,0,40,0.8);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(183,132,255,0.3);
+  border-radius: 16px;
+  padding: 10px 16px;
+  z-index: 1000;
+  text-align: center;
+  font-family: var(--font-sans);
+}
+.timer-label { font-size: 0.55rem; letter-spacing: 0.2em; color: var(--petal); text-transform: uppercase; }
+.timer-value { font-size: 0.9rem; font-weight: 300; color: white; margin-top: 2px; }
+
+/* ═══════════════════════════════════════════════════
+   NAV DOTS
+═══════════════════════════════════════════════════ */
+#nav-dots {
+  position: fixed; left: 20px; top: 50%;
+  transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 12px;
+  z-index: 500;
+}
+.nav-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255,26,108,0.3);
+}
+.nav-dot.active {
+  background: var(--rose);
+  box-shadow: 0 0 10px var(--rose);
+  transform: scale(1.4);
+}
+.nav-dot:hover { background: var(--petal); transform: scale(1.3); }
+
+/* ═══════════════════════════════════════════════════
+   SECTIONS
+═══════════════════════════════════════════════════ */
+.page-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 80px 24px;
+  z-index: 10;
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════════════
+   GLASS CARD
+═══════════════════════════════════════════════════ */
+.glass-card {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+}
+.glass-card-sm {
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+/* ═══════════════════════════════════════════════════
+   AURORA BG
+═══════════════════════════════════════════════════ */
+.aurora-bg {
+  position: absolute; inset: 0;
+  pointer-events: none; overflow: hidden; z-index: -1;
+}
+.aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.25;
+  animation: auroraFloat 12s ease-in-out infinite alternate;
+}
+.aurora-blob:nth-child(1) { width: 500px; height: 400px; background: var(--rose); top: -10%; left: -10%; animation-delay: 0s; }
+.aurora-blob:nth-child(2) { width: 400px; height: 500px; background: var(--lavender); top: 20%; right: -10%; animation-delay: 3s; }
+.aurora-blob:nth-child(3) { width: 350px; height: 350px; background: #4400AA; bottom: -10%; left: 30%; animation-delay: 6s; }
+@keyframes auroraFloat {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(30px, -20px) scale(1.1); }
+}
+
+/* ═══════════════════════════════════════════════════
+   TYPOGRAPHY
+═══════════════════════════════════════════════════ */
+.page-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.65rem; font-weight: 600;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--rose);
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.page-eyebrow::before, .page-eyebrow::after {
+  content: '';
+  width: 40px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--rose));
+}
+.page-eyebrow::after {
+  background: linear-gradient(90deg, var(--rose), transparent);
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 700;
+  line-height: 1.15;
+  background: linear-gradient(135deg, #fff 0%, var(--petal) 50%, var(--lavender) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.tamil-quote {
+  font-family: var(--font-tamil);
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  font-style: italic;
+  color: var(--petal);
+  line-height: 1.8;
+  text-align: center;
+  margin: 24px 0;
+  padding: 20px;
+  border-left: 3px solid var(--rose);
+  background: rgba(255,26,108,0.06);
+  border-radius: 0 12px 12px 0;
+}
+
+.story-text {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: rgba(255,255,255,0.8);
+  line-height: 1.9;
+  text-align: center;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════════════════
+   BUTTONS
+═══════════════════════════════════════════════════ */
+.btn-romantic {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 16px 40px;
+  border-radius: 50px;
+  background: linear-gradient(135deg, var(--rose), var(--violet));
+  color: white;
+  font-family: var(--font-sans);
+  font-size: 0.9rem; font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: none; cursor: pointer;
+  text-decoration: none;
+  position: relative; overflow: hidden;
+  box-shadow: 0 8px 30px rgba(255,26,108,0.4), 0 0 0 0 rgba(255,26,108,0.3);
+  transition: all 0.3s ease;
+  margin-top: 32px;
+  animation: pulse-btn 2s ease-in-out infinite;
+}
+@keyframes pulse-btn {
+  0%, 100% { box-shadow: 0 8px 30px rgba(255,26,108,0.4), 0 0 0 0 rgba(255,26,108,0.3); }
+  50% { box-shadow: 0 8px 30px rgba(255,26,108,0.6), 0 0 0 10px rgba(255,26,108,0); }
+}
+.btn-romantic:hover { transform: translateY(-3px) scale(1.04); }
+.btn-romantic::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+  opacity: 0; transition: opacity 0.3s;
+}
+.btn-romantic:hover::before { opacity: 1; }
+
+.btn-grand {
+  display: inline-flex; align-items: center; gap: 14px;
+  padding: 22px 60px;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #FF1A6C, #FF6B9D, #B784FF);
+  color: white;
+  font-family: var(--font-display);
+  font-size: 1.5rem; font-weight: 700;
+  border: none; cursor: pointer;
+  position: relative; overflow: hidden;
+  box-shadow: 0 12px 50px rgba(255,26,108,0.6), 0 0 60px rgba(183,132,255,0.3);
+  transition: all 0.3s ease;
+  letter-spacing: 0.05em;
+  animation: grand-pulse 1.5s ease-in-out infinite;
+}
+@keyframes grand-pulse {
+  0%, 100% { box-shadow: 0 12px 50px rgba(255,26,108,0.6), 0 0 60px rgba(183,132,255,0.3); transform: scale(1); }
+  50% { box-shadow: 0 16px 70px rgba(255,26,108,0.9), 0 0 80px rgba(183,132,255,0.5); transform: scale(1.03); }
+}
+.btn-grand:hover { transform: scale(1.06) translateY(-4px); }
+
+/* ═══════════════════════════════════════════════════
+   PAGE 1 — A BEAUTIFUL BEGINNING
+═══════════════════════════════════════════════════ */
+#page1 { background: linear-gradient(160deg, #0A0015 0%, #1a0030 50%, #0A0015 100%); }
+.hero-stars {
+  position: absolute; inset: 0; overflow: hidden;
+}
+.star {
+  position: absolute;
+  width: 2px; height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle var(--d, 3s) ease-in-out infinite var(--del, 0s);
+}
+@keyframes twinkle { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
+
+.hero-hearts-float {
+  position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+}
+.float-heart {
+  position: absolute;
+  font-size: var(--s, 1.2rem);
+  animation: floatUp var(--d, 6s) ease-in-out infinite var(--del, 0s);
+  opacity: 0;
+}
+@keyframes floatUp {
+  0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+  20% { opacity: 0.7; }
+  80% { opacity: 0.3; }
+  100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+}
+
+.hero-youtube-icon {
+  font-size: 3rem;
+  display: inline-block;
+  background: linear-gradient(135deg, #FF0000, #FF6B6B);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 20px rgba(255,0,0,0.5));
+  margin-bottom: 16px;
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.12); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.08); }
+  56% { transform: scale(1); }
+}
+
+/* ═══════════════════════════════════════════════════
+   PAGE 2 — TIMELINE
+═══════════════════════════════════════════════════ */
+#page2 { background: linear-gradient(160deg, #0D0020 0%, #1a0030 50%, #0D0020 100%); }
+.timeline {
+  display: flex; flex-direction: column; gap: 0;
+  max-width: 600px; margin: 32px auto; position: relative;
+}
+.timeline::before {
+  content: '';
+  position: absolute; left: 30px; top: 0; bottom: 0; width: 2px;
+  background: linear-gradient(to bottom, var(--rose), var(--lavender), var(--rose));
+}
+.timeline-item {
+  display: flex; align-items: flex-start; gap: 24px;
+  padding: 16px 0; position: relative;
+}
+.timeline-dot {
+  width: 60px; height: 60px; min-width: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--rose), var(--violet));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: 0 0 20px rgba(255,26,108,0.5);
+  position: relative; z-index: 1;
+  border: 2px solid rgba(255,255,255,0.2);
+}
+.timeline-content { padding-top: 12px; }
+.timeline-title {
+  font-family: var(--font-display); font-size: 1.2rem;
+  color: var(--petal); margin-bottom: 6px;
+}
+.timeline-desc {
+  font-family: var(--font-body); font-size: 0.95rem;
+  color: rgba(255,255,255,0.65); line-height: 1.7;
+}
+
+/* ═══════════════════════════════════════════════════
+   PAGE 3 — MAP
+═══════════════════════════════════════════════════ */
+#page3 { background: linear-gradient(160deg, #080015 0%, #110025 50%, #080015 100%); }
+.map-container {
+  width: 100%; max-width: 700px; margin: 0 auto;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,26,108,0.2);
+  border-radius: 24px;
+  padding: 32px;
+  position: relative; overflow: hidden;
+}
+.map-svg-area {
+  width: 100%;
+  height: 300px;
+  position: relative;
+}
+.city-pin {
+  position: absolute;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+.pin-circle {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--rose);
+  box-shadow: 0 0 20px var(--rose), 0 0 40px rgba(255,26,108,0.5);
+  animation: pinPulse 2s ease-in-out infinite;
+}
+@keyframes pinPulse {
+  0%, 100% { box-shadow: 0 0 10px var(--rose); transform: scale(1); }
+  50% { box-shadow: 0 0 30px var(--rose), 0 0 60px rgba(255,26,108,0.4); transform: scale(1.2); }
+}
+.pin-label {
+  font-family: var(--font-sans); font-size: 0.75rem; font-weight: 600;
+  color: var(--petal); letter-spacing: 0.1em;
+  text-shadow: 0 0 10px rgba(255,26,108,0.8);
+  white-space: nowrap;
+}
+.distance-badge {
+  text-align: center;
+  margin: 20px 0;
+  font-family: var(--font-display);
+  font-size: 2.5rem; font-weight: 900;
+  background: linear-gradient(135deg, var(--rose), var(--lavender));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 20px rgba(255,26,108,0.5));
+}
+.map-svg { width: 100%; height: 100%; }
+
+/* ═══════════════════════════════════════════════════
+   PAGE 4 — WHEN YOU BECAME SPECIAL
+═══════════════════════════════════════════════════ */
+#page4 { background: linear-gradient(160deg, #0D0020 0%, #1a0030 50%, #0D0020 100%); }
+.moon-scene {
+  position: relative;
+  width: 200px; height: 200px;
+  margin: 0 auto 32px;
+}
+.moon {
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff9e6, #FFD700, #FFA500);
+  box-shadow: 0 0 40px rgba(255,215,0,0.4), 0 0 80px rgba(255,165,0,0.2);
+  position: absolute; top: 10%; left: 50%; transform: translateX(-50%);
+  animation: moonFloat 4s ease-in-out infinite;
+}
+@keyframes moonFloat { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-15px); } }
+.memory-bubble {
+  position: absolute;
+  background: rgba(255,26,108,0.15);
+  border: 1px solid rgba(255,26,108,0.3);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  animation: orbitBubble var(--d, 6s) linear infinite;
+}
+@keyframes orbitBubble {
+  from { transform: rotate(0deg) translateX(80px) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(80px) rotate(-360deg); }
+}
+
+/* ═══════════════════════════════════════════════════
+   PAGE 5 — MY HEART SPEAKS
+═══════════════════════════════════════════════════ */
+#page5 { background: linear-gradient(160deg, #080015 0%, #110025 50%, #080015 100%); }
+.love-letter {
+  max-width: 680px; margin: 0 auto;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,26,108,0.25);
+  border-radius: 24px; padding: 40px;
+  position: relative;
+}
+.love-letter::before {
+  content: '"';
+  position: absolute; top: -20px; left: 30px;
+  font-size: 8rem; color: var(--rose); opacity: 0.15;
+  font-family: var(--font-display); line-height: 1;
+}
+.letter-para {
+  font-family: var(--font-body);
+  font-size: 1.1rem; line-height: 2;
+  color: rgba(255,255,255,0.82);
+  margin-bottom: 20px;
+}
+.letter-para span { color: var(--petal); font-style: italic; }
+.letter-signature {
+  font-family: var(--font-script);
+  font-size: 2rem; color: var(--rose);
+  text-align: right; margin-top: 24px;
+}
+
+/* ═══════════════════════════════════════════════════
+   PAGE 6 — 20 REASONS
+═══════════════════════════════════════════════════ */
+#page6 { background: linear-gradient(160deg, #0A0018 0%, #150028 50%, #0A0018 100%); }
+.reasons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+  max-width: 900px; margin: 32px auto;
+}
+.reason-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,26,108,0.2);
+  border-radius: 16px; padding: 20px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.35s ease;
+  position: relative; overflow: hidden;
+}
+.reason-card:hover {
+  background: rgba(255,26,108,0.1);
+  border-color: rgba(255,26,108,0.5);
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 12px 30px rgba(255,26,108,0.25);
+}
+.reason-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at center, rgba(255,26,108,0.15), transparent 70%);
+  opacity: 0; transition: opacity 0.35s;
+}
+.reason-card:hover::before { opacity: 1; }
+.reason-number {
+  font-family: var(--font-sans);
+  font-size: 0.65rem; font-weight: 700;
+  color: var(--rose); letter-spacing: 0.15em;
+  margin-bottom: 8px;
+}
+.reason-icon { font-size: 1.6rem; margin-bottom: 8px; display: block; }
+.reason-text {
+  font-family: var(--font-body); font-size: 0.95rem;
+  color: rgba(255,255,255,0.8); line-height: 1.4;
+}
+
+/* ═══════════════════════════════════════════════════
+   PAGE 7 — PROMISES
+═══════════════════════════════════════════════════ */
+#page7 { background: linear-gradient(160deg, #0D0020 0%, #1a0030 50%, #0D0020 100%); }
+.promises-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px; max-width: 900px; margin: 32px auto;
+}
+.promise-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(183,132,255,0.25);
+  border-radius: 20px; padding: 28px 24px;
+  text-align: center;
+  transition: all 0.35s ease;
+  position: relative; overflow: hidden;
+}
+.promise-card:hover {
+  background: rgba(183,132,255,0.08);
+  border-color: rgba(183,132,255,0.5);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(183,132,255,0.2);
+}
+.promise-icon { font-size: 2.5rem; display: block; margin-bottom: 12px; }
+.promise-title {
+  font-family: var(--font-display); font-size: 1.2rem;
+  color: var(--lavender); margin-bottom: 8px;
+}
+.promise-desc {
+  font-family: var(--font-body); font-size: 0.9rem;
+  color: rgba(255,255,255,0.65); line-height: 1.6;
+}
+
+/* ═══════════════════════════════════════════════════
+   PAGE 8 — DREAMS
+═══════════════════════════════════════════════════ */
+#page8 { background: linear-gradient(160deg, #060012 0%, #0F001F 50%, #060012 100%); }
+.dreams-wrap {
+  display: flex; flex-direction: column; gap: 20px;
+  max-width: 700px; margin: 32px auto;
+}
+.dream-item {
+  display: flex; align-items: center; gap: 20px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,143,171,0.2);
+  border-radius: 16px; padding: 20px 24px;
+  transition: all 0.3s ease;
+}
+.dream-item:hover {
+  border-color: rgba(255,143,171,0.5);
+  background: rgba(255,143,171,0.06);
+  transform: translateX(8px);
+  box-shadow: -4px 0 20px rgba(255,26,108,0.2);
+}
+.dream-icon { font-size: 2rem; min-width: 44px; text-align: center; }
+.dream-text {
+  font-family: var(--font-body); font-size: 1.05rem;
+  color: rgba(255,255,255,0.82); line-height: 1.6;
+}
+.dream-text strong { color: var(--petal); font-style: italic; }
+
+/* ═══════════════════════════════════════════════════
+   PAGE 9 — THANK YOU
+═══════════════════════════════════════════════════ */
+#page9 { background: radial-gradient(ellipse at center, #1a003a, #060010); }
+.thanks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px; max-width: 850px; margin: 32px auto;
+}
+.thank-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,26,108,0.2);
+  border-radius: 16px; padding: 24px 20px;
+  text-align: center; transition: all 0.3s ease;
+}
+.thank-card:hover {
+  background: rgba(255,26,108,0.08);
+  border-color: rgba(255,26,108,0.5);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(255,26,108,0.2);
+}
+.thank-icon { font-size: 2rem; display: block; margin-bottom: 12px; }
+.thank-text {
+  font-family: var(--font-display); font-size: 1.05rem;
+  color: var(--petal); line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════════════════
+   PAGE 10 — FOREVER
+═══════════════════════════════════════════════════ */
+#page10 {
+  background: radial-gradient(ellipse at center, #200040, #0A0015);
+  min-height: 100vh;
+}
+.forever-heart {
+  font-size: clamp(5rem, 15vw, 10rem);
+  display: block; text-align: center; margin-bottom: 32px;
+  filter: drop-shadow(0 0 40px rgba(255,26,108,0.8)) drop-shadow(0 0 80px rgba(183,132,255,0.4));
+  animation: heartbeat 1.2s ease-in-out infinite;
+}
+.final-city-line {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 4vw, 2.5rem);
+  text-align: center; color: white; margin-bottom: 12px;
+  letter-spacing: 0.08em;
+}
+.final-city-line .city-a { color: var(--rose); }
+.final-city-line .city-b { color: var(--lavender); }
+.infinity-symbol {
+  display: block; text-align: center;
+  font-size: 5rem; line-height: 1;
+  background: linear-gradient(135deg, var(--rose), var(--lavender));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; margin: 16px 0;
+  filter: drop-shadow(0 0 20px rgba(255,26,108,0.5));
+}
+.final-quote-block { max-width: 600px; margin: 32px auto; text-align: center; }
+.final-message-line {
+  font-family: var(--font-tamil);
+  font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+  color: rgba(255,255,255,0.8); line-height: 2;
+}
+.final-poem {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 3vw, 1.6rem);
+  font-style: italic; color: var(--petal);
+  line-height: 2.2; margin: 32px 0;
+}
+
+/* ═══════════════════════════════════════════════════
+   CELEBRATION OVERLAY
+═══════════════════════════════════════════════════ */
+#celebration {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.92);
+  z-index: 9000; display: none;
+  align-items: center; justify-content: center;
+  flex-direction: column;
+}
+#celebration.active { display: flex; }
+.celebration-text {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 6vw, 4rem);
+  color: white; text-align: center;
+  background: linear-gradient(135deg, var(--rose), var(--gold), var(--lavender));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: celebPulse 0.8s ease-in-out infinite alternate;
+}
+@keyframes celebPulse { from { opacity: 0.7; transform: scale(0.95); } to { opacity: 1; transform: scale(1.05); } }
+.celebration-sub {
+  font-family: var(--font-tamil); font-size: 1.2rem;
+  color: var(--petal); margin-top: 16px; text-align: center;
+}
+#close-celebration {
+  margin-top: 32px; padding: 12px 32px;
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 50px; color: white; cursor: pointer;
+  font-family: var(--font-sans); font-size: 0.85rem; letter-spacing: 0.1em;
+  transition: all 0.3s;
+}
+#close-celebration:hover { background: rgba(255,255,255,0.2); }
+#confetti-canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════
+   QUOTE GENERATOR
+═══════════════════════════════════════════════════ */
+#quote-gen {
+  position: fixed; bottom: 100px; left: 24px;
+  max-width: 220px;
+  background: rgba(20,0,40,0.8);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(183,132,255,0.3);
+  border-radius: 16px; padding: 14px 16px;
+  z-index: 500; cursor: pointer;
+  transition: all 0.3s;
+}
+#quote-gen:hover { border-color: rgba(183,132,255,0.6); }
+.qg-label { font-size: 0.55rem; letter-spacing: 0.2em; color: var(--lavender); text-transform: uppercase; margin-bottom: 6px; font-family: var(--font-sans); }
+.qg-text { font-size: 0.8rem; color: var(--petal); font-family: var(--font-body); line-height: 1.5; min-height: 40px; }
+
+/* ═══════════════════════════════════════════════════
+   TYPEWRITER
+═══════════════════════════════════════════════════ */
+.typewriter {
+  overflow: hidden;
+  border-right: 2px solid var(--rose);
+  white-space: nowrap;
+  animation: typing 3.5s steps(40, end), blink 0.75s step-end infinite;
+}
+@keyframes typing { from { width: 0; } to { width: 100%; } }
+@keyframes blink { from, to { border-color: transparent; } 50% { border-color: var(--rose); } }
+
+/* ═══════════════════════════════════════════════════
+   SCROLL INDICATOR
+═══════════════════════════════════════════════════ */
+.scroll-indicator {
+  position: absolute; bottom: 32px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  opacity: 0.5; animation: scrollBob 2s ease-in-out infinite;
+}
+@keyframes scrollBob { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
+.scroll-line {
+  width: 1px; height: 40px;
+  background: linear-gradient(to bottom, transparent, var(--rose));
+}
+.scroll-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--rose); }
+
+/* ═══════════════════════════════════════════════════
+   DIVIDERS
+═══════════════════════════════════════════════════ */
+.heart-divider {
+  display: flex; align-items: center; gap: 16px;
+  margin: 24px 0;
+}
+.heart-divider::before, .heart-divider::after {
+  content: '';
+  flex: 1; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,26,108,0.4), transparent);
+}
+.heart-divider-icon { color: var(--rose); font-size: 1rem; }
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .glass-card { padding: 28px 20px; }
+  .love-letter { padding: 28px 20px; }
+  .reasons-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .promises-grid { grid-template-columns: 1fr 1fr; }
+  .thanks-grid { grid-template-columns: 1fr 1fr; }
+  #music-player { bottom: 12px; right: 12px; min-width: 160px; padding: 10px 14px; }
+  #quote-gen { display: none; }
+  #nav-dots { display: none; }
+  .timeline::before { left: 24px; }
+  .timeline-dot { width: 48px; height: 48px; min-width: 48px; font-size: 1.2rem; }
+}
+@media (max-width: 480px) {
+  .reasons-grid { grid-template-columns: repeat(2, 1fr); }
+  .promises-grid { grid-template-columns: 1fr; }
+  .thanks-grid { grid-template-columns: 1fr; }
+  .btn-romantic { padding: 14px 28px; font-size: 0.8rem; }
+  .btn-grand { padding: 16px 36px; font-size: 1.1rem; }
+}
+
+/* ═══════════════════════════════════════════════════
+   GLOW TEXT
+═══════════════════════════════════════════════════ */
+.glow-text {
+  text-shadow: 0 0 20px rgba(255,26,108,0.5), 0 0 40px rgba(183,132,255,0.3);
+}
+.section-sep {
+  width: 80px; height: 2px;
+  background: linear-gradient(90deg, var(--rose), var(--lavender));
+  margin: 16px auto; border-radius: 2px;
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ LOADING ═══════════════════ -->
+<div id="loading-screen">
+  <div class="loading-heart">❤️</div>
+  <div class="loading-text">A love story is loading...</div>
+  <div class="loading-bar-wrap"><div class="loading-bar"></div></div>
+</div>
+
+<!-- ═══════════════════ CURSOR ═══════════════════ -->
+<div id="cursor">
+  <svg viewBox="0 0 20 20"><path d="M10 18.6C10 18.6 1 12.6 1 6.6C1 3.5 3.5 1 6.5 1C8.2 1 9.7 1.8 10.6 3.1L10 4L9.4 3.1C8.3 1.8 6.8 1 5.1 1C3 1 1 3 1 6.6" fill="none" stroke="#FF1A6C" stroke-width="1.2"/><path d="M10 18.6C10 18.6 19 12.6 19 6.6C19 3.5 16.5 1 13.5 1C11.8 1 10.3 1.8 9.4 3.1" fill="none" stroke="#FF1A6C" stroke-width="1.2"/><path d="M10 18.6 L10 4" fill="none" stroke="none"/><path fill="#FF1A6C" d="M10 18.6c0 0-9-6-9-12 0-3.3 2.7-6 6-6 1.7 0 3.2.8 4.2 2 1-1.2 2.5-2 4.2-2 3.3 0 6 2.7 6 6 0 6-9 12-9 12z" opacity="0.85"/></svg>
+</div>
+<div id="cursor-trail"></div>
+
+<!-- ═══════════════════ CANVASES ═══════════════════ -->
+<canvas id="bg-canvas"></canvas>
+<canvas id="petals-canvas"></canvas>
+<canvas id="hearts-canvas"></canvas>
+
+<!-- ═══════════════════ MUSIC PLAYER ═══════════════════ -->
+<div id="music-player">
+  <span class="music-icon" id="music-icon">🎵</span>
+  <div class="music-info">
+    <div class="music-title">Our Love Song ❤️</div>
+    <div class="music-status" id="music-status">Click ▶ to play</div>
+  </div>
+  <div class="music-controls">
+    <div class="visualizer paused" id="visualizer">
+      <div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div>
+      <div class="v-bar"></div><div class="v-bar"></div>
+    </div>
+    <button id="play-btn">▶</button>
+    <input type="range" id="vol-slider" min="0" max="1" step="0.05" value="0.5">
+  </div>
+</div>
+
+<!-- ═══════════════════ LOVE TIMER ═══════════════════ -->
+<div id="love-timer">
+  <div class="timer-label">❤️ Days Together</div>
+  <div class="timer-value" id="timer-val">Counting...</div>
+</div>
+
+<!-- ═══════════════════ NAV DOTS ═══════════════════ -->
+<div id="nav-dots">
+  <div class="nav-dot active" onclick="scrollTo(0,0)" title="Beginning"></div>
+  <div class="nav-dot" title="Instagram"></div>
+  <div class="nav-dot" title="Map"></div>
+  <div class="nav-dot" title="Special"></div>
+  <div class="nav-dot" title="Heart"></div>
+  <div class="nav-dot" title="Reasons"></div>
+  <div class="nav-dot" title="Promises"></div>
+  <div class="nav-dot" title="Dreams"></div>
+  <div class="nav-dot" title="Thank You"></div>
+  <div class="nav-dot" title="Forever"></div>
+</div>
+
+<!-- ═══════════════════ QUOTE GENERATOR ═══════════════════ -->
+<div id="quote-gen" onclick="nextQuote()">
+  <div class="qg-label">✨ Tamil Love Quote</div>
+  <div class="qg-text" id="qg-text">Click for a romantic quote...</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE 1 — A BEAUTIFUL BEGINNING
+═══════════════════════════════════════════════════════════════ -->
+<section class="page-section" id="page1">
+  <div class="aurora-bg">
+    <div class="aurora-blob"></div>
+    <div class="aurora-blob"></div>
+    <div class="aurora-blob"></div>
+  </div>
+  <div class="hero-stars" id="stars-container"></div>
+  <div class="hero-hearts-float" id="float-hearts"></div>
+
+  <div class="glass-card" data-aos="fade-up">
+    <div class="page-eyebrow">Page 01 • The Beginning</div>
+    <div class="youtube-icon" style="text-align:center;font-size:2.8rem;margin-bottom:12px;">▶️</div>
+    <h1 class="page-title">யூடியூபில் தொடங்கிய<br>ஒரு அழகான கதை ❤️</h1>
+    <div class="section-sep"></div>
+    <div class="tamil-quote" data-aos="fade-up" data-aos-delay="200">
+      "சில சந்திப்புகள் தற்செயலாக நடக்கும்,<br>
+      ஆனால் அவை வாழ்க்கையை மாற்றி விடும். ❤️"
+    </div>
+    <p class="story-text" data-aos="fade-up" data-aos-delay="300">
+      Two souls from different corners of Tamil Nadu — one from the ancient city of <span style="color:var(--rose);font-style:italic;">Vellore</span>, 
+      another from the divine land of <span style="color:var(--lavender);font-style:italic;">Kanyakumari</span>. 
+      The universe conspired in the most beautiful way — through a simple YouTube recommendation, 
+      two strangers found each other under a sky full of stars and possibilities.
+    </p>
+    <p class="story-text" data-aos="fade-up" data-aos-delay="400" style="margin-top:16px;">
+      What began as an accidental discovery became the most precious gift life has ever given me. 
+      I didn't know then that scrolling past that video would lead me to you — 
+      the one who would change the colour of my every day. 🌹
+    </p>
+    <div class="heart-divider"><span class="heart-divider-icon">❤️</span></div>
+    <div style="text-align:center;">
+      <a href="#page2" class="btn-romantic">Continue ❤️</a>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    <div class="scroll-dot"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE 2 — FROM YOUTUBE TO INSTAGRAM
+═══════════════════════════════════════════════════════════════ -->
+<section class="page-section" id="page2">
+  <div class="aurora-bg">
+    <div class="aurora-blob" style="background:var(--violet);"></div>
+    <div class="aurora-blob" style="background:var(--rose);top:60%;left:60%;"></div>
+    <div class="aurora-blob" style="background:#220055;bottom:0;right:0;"></div>
+  </div>
+
+  <div class="glass-card" data-aos="fade-up">
+    <div class="page-eyebrow">Page 02 • Our Journey</div>
+    <h2 class="page-title">From YouTube to Instagram ❤️</h2>
+    <div class="section-sep"></div>
+
+    <div class="timeline" data-aos="fade-up" data-aos-delay="100">
+      <div class="timeline-item">
+        <div class="timeline-dot">▶️</div>
+        <div class="timeline-content">
+          <div class="timeline-title">YouTube Discovery</div>
+          <div class="timeline-desc">It all began with a video — a tiny thumbnail that held the weight of a beautiful future. The universe quietly wrote our first chapter.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">📸</div>
+        <div class="timeline-content">
+          <div class="timeline-title">Instagram Connection</div>
+          <div class="timeline-desc">A follow. A message. A heartbeat that was new and exciting. Instagram became the bridge between two hearts that were meant to find each other.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">💬</div>
+        <div class="timeline-content">
+          <div class="timeline-title">Blossoming Friendship</div>
+          <div class="timeline-desc">Late-night conversations, shared laughs, little secrets — a friendship grew roots so deep that nothing could shake it. Every message was a gift.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">💖</div>
+        <div class="timeline-content">
+          <div class="timeline-title">Something More Beautiful</div>
+          <div class="timeline-desc">Without even realising, you became my favourite notification, my favourite conversation, my favourite person. And my heart knew — you are special.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tamil-quote" data-aos="fade-up" data-aos-delay="300">
+      "ஒரு மெசேஜ் தான் ஆரம்பம்,<br>
+      ஆனால் அது என் நாள்களை அழகாக்கியது. ❤️"
+    </div>
+    <div style="text-align:center;">
+      <a href="#page3" class="btn-romantic">My Feelings ❤️</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE 3 — VELLORE ❤️ KANYAKUMARI MAP
+═══════════════════════════════════════════════════════════════ -->
+<section class="page-section" id="page3">
+  <div class="aurora-bg">
+    <div class="aurora-blob" style="background:#4400AA;"></div>
+    <div class="aurora-blob" style="background:var(--rose);top:40%;right:-5%;"></div>
+  </div>
+
+  <div class="glass-card" data-aos="fade-up" style="max-width:750px;">
+    <div class="page-eyebrow">Page 03 • Distance Cannot Separate Us</div>
+    <h2 class="page-title">வெல்லூர் ❤️ கன்னியாகுமரி</h2>
+    <div class="section-sep"></div>
+
+    <div class="map-container" data-aos="zoom-in" data-aos-delay="200">
+      <svg class="map-svg" viewBox="0 0 700 380" xmlns="http://www.w3.org/2000/svg">
+        <!-- India / Tamil Nadu simplified silhouette path -->
+        <defs>
+          <radialGradient id="cityGlow1" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#FF1A6C" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#FF1A6C" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="cityGlow2" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#B784FF" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#B784FF" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+            <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <marker id="heartMarker" markerWidth="14" markerHeight="14" refX="7" refY="7">
+            <text x="7" y="10" text-anchor="middle" font-size="12">❤️</text>
+          </marker>
+        </defs>
+
+        <!-- Background grid -->
+        <rect width="700" height="380" fill="rgba(255,255,255,0.02)" rx="16"/>
+        <line x1="0" y1="95" x2="700" y2="95" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <line x1="0" y1="190" x2="700" y2="190" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <line x1="0" y1="285" x2="700" y2="285" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <line x1="175" y1="0" x2="175" y2="380" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <line x1="350" y1="0" x2="350" y2="380" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <line x1="525" y1="0" x2="525" y2="380" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+
+        <!-- Vellore -->
+        <circle cx="310" cy="100" r="30" fill="url(#cityGlow1)"/>
+        <circle cx="310" cy="100" r="10" fill="#FF1A6C" filter="url(#glow)">
+          <animate attributeName="r" values="8;13;8" dur="2s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="1;0.6;1" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        <text x="310" y="145" text-anchor="middle" fill="white" font-family="Raleway,sans-serif" font-size="14" font-weight="600">📍 Vellore</text>
+        <text x="310" y="162" text-anchor="middle" fill="rgba(255,143,171,0.7)" font-family="Raleway,sans-serif" font-size="10">Tamil Nadu</text>
+
+        <!-- Animated route path -->
+        <path id="route-path" d="M 310 110 C 300 160 280 200 270 250 C 260 300 265 310 270 325" 
+          stroke="url(#routeGrad)" stroke-width="2" fill="none" stroke-dasharray="6,6">
+          <animate attributeName="stroke-dashoffset" values="100;0" dur="3s" repeatCount="indefinite"/>
+        </path>
+        <defs>
+          <linearGradient id="routeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#FF1A6C"/>
+            <stop offset="100%" stop-color="#B784FF"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Travelling hearts on path -->
+        <text font-size="16" fill="#FF1A6C" opacity="0.9">
+          <textPath href="#route-path">❤️</textPath>
+          <animateMotion path="M 310 110 C 300 160 280 200 270 250 C 260 300 265 310 270 325" dur="4s" repeatCount="indefinite"/>
+        </text>
+        <text font-size="12" fill="#FFB3C6" opacity="0.7">
+          <animateMotion path="M 310 110 C 300 160 280 200 270 250 C 260 300 265 310 270 325" dur="4s" begin="1.5s" repeatCount="indefinite"/>💕
+        </text>
+
+        <!-- Kanyakumari -->
+        <circle cx="270" cy="325" r="30" fill="url(#cityGlow2)"/>
+        <circle cx="270" cy="325" r="10" fill="#B784FF" filter="url(#glow)">
+          <animate attributeName="r" values="8;13;8" dur="2s" begin="1s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="1;0.6;1" dur="2s" begin="1s" repeatCount="indefinite"/>
+        </circle>
+        <text x="270" y="358" text-anchor="middle" fill="white" font-family="Raleway,sans-serif" font-size="14" font-weight="600">📍 Kanyakumari</text>
+
+        <!-- Distance label -->
+        <rect x="370" y="175" width="200" height="100" rx="12" fill="rgba(255,26,108,0.1)" stroke="rgba(255,26,108,0.3)" stroke-width="1"/>
+        <text x="470" y="215" text-anchor="middle" fill="#FF1A6C" font-family="Playfair Display,serif" font-size="28" font-weight="900" filter="url(#glow)">600+ KM</text>
+        <text x="470" y="238" text-anchor="middle" fill="rgba(255,179,198,0.8)" font-family="Raleway,sans-serif" font-size="10" letter-spacing="0.2em">DISTANCE CANNOT STOP LOVE</text>
+        <text x="470" y="260" text-anchor="middle" font-size="18">❤️ → ❤️</text>
+      </svg>
+
+      <div class="distance-badge">600+ KM of Love ❤️</div>
+    </div>
+
+    <div class="tamil-quote" data-aos="fade-up" data-aos-delay="300" style="margin-top:20px;">
+      "வெல்லூரில் நான், கன்னியாகுமரியில் நீ. ❤️<br>
+      தூரம் நம்மை பிரிக்கவில்லை,<br>
+      அது நம் காதலை இன்னும் வலிமையாக்கியது. ❤️<br>
+      வரைபடத்தில் தூரம் இருக்கலாம், என் மனதில் இல்லை. ❤️"
+    </div>
+    <div style="text-align:center;">
+      <a href="#page4" class="btn-romantic">Open My Heart ❤️</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE 4 — WHEN YOU BECAME SPECIAL
+═══════════════════════════════════════════════════════════════ -->
+<section class="page-section" id="page4">
+  <div class="aurora-bg">
+    <div class="aurora-blob" style="background:#FFD700;opacity:0.15;"></div>
+    <div class="aurora-blob" style="background:var(--rose);top:30%;right:5%;"></div>
+  </div>
+
+  <div class="glass-card" data-aos="fade-up">
+    <div class="page-eyebrow">Page 04 • The Moment Everything Changed</div>
+    <h2 class="page-title">When You Became Special ❤️</h2>
+    <div class="section-sep"></div>
+
+    <div class="moon-scene" data-aos="zoom-in" data-aos-delay="200">
+      <div class="moon"></div>
+      <div class="memory-bubble" style="width:44px;height:44px;top:30%;left:20%;--d:5s;">🌸</div>
+      <div class="memory-bubble" style="width:36px;height:36px;top:50%;right:15%;--d:7s;animation-delay:1s;">✨</div>
+      <div class="memory-bubble" style="width:40px;height:40px;bottom:10%;left:40%;--d:6s;animation-delay:2s;">💫</div>
+    </div>
+
+    <p class="story-text" data-aos="fade-up" data-aos-delay="200">
+      There was no single moment — it was a collection of little moments. 
+      The way you responded to my messages. The way you cared. 
+      The way a simple conversation with you made my entire day feel lighter.
+    </p>
+    <p class="story-text" data-aos="fade-up" data-aos-delay="300" style="margin-top:16px;">
+      One day I noticed I was looking forward to hearing from you. Then I realised I was smiling 
+      at my phone just because of you. That's when I knew — you had become something truly 
+      <span style="color:var(--petal);font-style:italic;">special</span> to me. 🌙
+    </p>
+
+    <div class="tamil-quote" data-aos="fade-up" data-aos-delay="400">
+      "ஒரு நாள் நீ ஒரு பழக்கம் ஆனாய்,<br>
+      பிறகு நீ என் மகிழ்ச்சி ஆனாய். ❤️"
+    </div>
+    <div style="text-align:center;">
+      <a href="#page5" class="btn-romantic">Read More ❤️</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE 5 — MY HEART SPEAKS
+═══════════════════════════════════════════════════════════════ -->
+<section class="page-section" id="page5">
+  <div class="aurora-bg">
+    <div class="aurora-blob" style="background:var(--rose);opacity:0.2;"></div>
+    <div class="aurora-blob" style="background:var(--violet);top:60%;right:0%;"></div>
+  </div>
+
+  <div style="max-width:800px;width:100%;">
+    <div class="page-eyebrow" style="justify-content:center;" data-aos="fade-down">Page 05 • From My Heart to Yours</div>
+    <h2 class="page-title" data-aos="fade-up">My Heart Speaks ❤️</h2>
+
+    <div class="love-letter" data-aos="fade-up" data-aos-delay="200">
+      <p class="letter-para">
+        Dear you,<br><br>
+        Every time my phone lights up with your message, something happens inside me — 
+        a warmth that I can only describe as <span>pure happiness</span>. 
+        You have this magical way of making even the most ordinary day feel like something worth remembering.
+      </p>
+      <p class="letter-para">
+        I think about you often. Not just once in a while — but in the quiet moments between 
+        everything else. When I see something beautiful, I wonder if you'd love it too. 
+        When something makes me laugh, I wish I could share that laughter with you.
+      </p>
+      <p class="letter-para">
+        You became part of my daily life so naturally, so gently, that I didn't even notice 
+        until I realised I couldn't imagine a day without your presence. 
+        Your words, your thoughts, your kindness — they've woven themselves into the fabric of my days.
+      </p>
+      <p class="letter-para">
+        I'm grateful — <span>deeply, sincerely grateful</span> — that our paths crossed the way they did. 
+        The universe was very generous when it led me to you. 🌹
+      </p>
+      <div class="letter-signature">With all my heart ❤️</div>
+    </div>
+
+    <div class="tamil-quote" data-aos="fade-up" data-aos-delay="300" style="max-width:700px;margin:24px auto;">
+      "என் நாளின் அழகான தருணங்களில்,<br>
+      உன் நினைவுகள் எப்போதும் இருக்கும். ❤️"
+    </div>
+    <div style="text-align:center;" data-aos="fade-up" data-aos-delay="400">
+      <a href="#page6" class="btn-romantic">Why You Are Special ❤️</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE 6 — 20 REASONS YOU ARE SPECIAL
+═══════════════════════════════════════════════════════════════ -->
+<section class="page-section" id="page6">
+  <div class="aurora-bg">
+    <div class="aurora-blob" style="background:#FF6B9D;opacity:0.18;"></div>
+    <div class="aurora-blob" style="background:var(--violet);top:50%;left:50%;"></div>
+  </div>
+
+  <div style="max-width:960px;width:100%;">
+    <div class="page-eyebrow" style="justify-content:center;" data-aos="fade-down">Page 06 • Every Beautiful Thing About You</div>
+    <h2 class="page-title" data-aos="fade-up">20 Reasons You Are Special ❤️</h2>
+
+    <div class="reasons-grid" id="reasons-grid">
+      <!-- Filled by JS -->
+    </div>
+
+    <div class="tamil-quote" data-aos="fade-up" style="max-width:600px;margin:24px auto;">
+      "நீ இருப்பதால் சில நாட்கள் இன்னும் அழகாகிறது. ❤️"
+    </div>
+    <div style="text-align:center;" data-aos="fade-up">
+      <a href="#page7" class="btn-romantic">My Promises ❤️</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE 7 — MY PROMISES
+═══════════════════════════════════════════════════════════════ -->
+<section class="page-section" id="page7">
+  <div class="aurora-bg">
+    <div class="aurora-blob" style="background:var(--lavender);opacity:0.2;"></div>
+    <div class="aurora-blob" style="background:var(--rose);bottom:0;right:10%;"></div>
+  </div>
+
+  <div style="max-width:960px;width:100%;">
+    <div class="page-eyebrow" style="justify-content:center;" data-aos="fade-down">Page 07 • Words from My Soul</div>
+    <h2 class="page-title" data-aos="fade-up">My Promises to You ❤️</h2>
+
+    <div class="promises-grid" id="promises-grid">
+      <!-- Filled by JS -->
+    </div>
+
+    <div style="text-align:center;margin:28px 0;" data-aos="fade-up">
+      <div style="font-size:3rem;animation:heartbeat 1.5s ease-in-out infinite;display:inline-block;">🤝</div>
+    </div>
+
+    <div class="tamil-quote" data-aos="fade-up" style="max-width:600px;margin:0 auto 24px;">
+      "அன்பு என்பது வார்த்தைகளில் அல்ல,<br>
+      அதை உணர வைப்பதில் இருக்கிறது. ❤️"
+    </div>
+    <div style="text-align:center;" data-aos="fade-up">
+      <a href="#page8" class="btn-romantic">My Dreams ❤️</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE 8 — MY DREAMS WITH YOU
+═══════════════════════════════════════════════════════════════ -->
+<section class="page-section" id="page8">
+  <div class="aurora-bg">
+    <div class="aurora-blob" style="background:#FF8F00;opacity:0.12;"></div>
+    <div class="aurora-blob" style="background:var(--violet);top:30%;right:0%;"></div>
+    <div class="aurora-blob" style="background:var(--rose);bottom:5%;left:20%;opacity:0.18;"></div>
+  </div>
+
+  <div style="max-width:800px;width:100%;">
+    <div class="page-eyebrow" style="justify-content:center;" data-aos="fade-down">Page 08 • What I Dream Of</div>
+    <h2 class="page-title" data-aos="fade-up">My Dreams With You ❤️</h2>
+
+    <!-- Lantern scene -->
+    <div data-aos="zoom-in" data-aos-delay="100" style="text-align:center;margin:16px 0;font-size:2rem;letter-spacing:0.3em;">
+      🌅 ✨ 🏮 ✨ 🌟
+    </div>
+
+    <div class="dreams-wrap" id="dreams-list">
+      <!-- Filled by JS -->
+    </div>
+
+    <div class="tamil-quote" data-aos="fade-up" style="max-width:600px;margin:24px auto;">
+      "என் எதிர்காலத்தின் அழகான கனவுகளில்,<br>
+      நீ ஒரு முக்கியமான இடம் பிடித்திருக்கிறாய். ❤️"
+    </div>
+    <div style="text-align:center;" data-aos="fade-up">
+      <a href="#page9" class="btn-romantic">A Special Thank You ❤️</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE 9 — THANK YOU
+═══════════════════════════════════════════════════════════════ -->
+<section class="page-section" id="page9">
+  <div class="aurora-bg">
+    <div class="aurora-blob" style="background:var(--rose);opacity:0.25;"></div>
+    <div class="aurora-blob" style="background:var(--lavender);top:50%;right:5%;"></div>
+  </div>
+
+  <div style="max-width:960px;width:100%;">
+    <div class="page-eyebrow" style="justify-content:center;" data-aos="fade-down">Page 09 • From the Bottom of My Heart</div>
+    <h2 class="page-title" data-aos="fade-up">Thank You for Entering My Life ❤️</h2>
+
+    <div style="text-align:center;font-size:2.5rem;margin:16px 0;animation:heartbeat 1.5s ease-in-out infinite;display:block;" data-aos="zoom-in">🌌</div>
+
+    <div class="thanks-grid" id="thanks-grid">
+      <!-- Filled by JS -->
+    </div>
+
+    <div class="tamil-quote" data-aos="fade-up" style="max-width:600px;margin:24px auto;">
+      "என் வாழ்க்கையின் அழகான அத்தியாயங்களில்,<br>
+      உன் பெயர் என்றும் இருக்கும். ❤️"
+    </div>
+    <div style="text-align:center;" data-aos="fade-up">
+      <a href="#page10" class="btn-romantic">Final Message ❤️</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE 10 — FOREVER IN MY HEART
+═══════════════════════════════════════════════════════════════ -->
+<section class="page-section" id="page10">
+  <div class="aurora-bg">
+    <div class="aurora-blob" style="background:var(--rose);opacity:0.3;width:600px;height:600px;top:-20%;left:-10%;"></div>
+    <div class="aurora-blob" style="background:var(--lavender);opacity:0.3;width:500px;height:500px;top:30%;right:-10%;animation-delay:4s;"></div>
+    <div class="aurora-blob" style="background:#4400AA;opacity:0.25;width:400px;height:400px;bottom:-10%;left:30%;animation-delay:8s;"></div>
+  </div>
+  <canvas id="fireworks-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;"></canvas>
+
+  <div style="max-width:750px;width:100%;text-align:center;position:relative;z-index:5;">
+    <div class="page-eyebrow" style="justify-content:center;" data-aos="fade-down">Page 10 • Always & Forever</div>
+
+    <div class="forever-heart" data-aos="zoom-in">❤️</div>
+
+    <div class="final-city-line" data-aos="fade-up" data-aos-delay="100">
+      <span class="city-a">VELLORE</span> &nbsp;❤️&nbsp; <span class="city-b">KANYAKUMARI</span>
+    </div>
+    <div class="infinity-symbol" data-aos="zoom-in" data-aos-delay="200">∞</div>
+
+    <div class="final-quote-block glass-card" data-aos="fade-up" data-aos-delay="300" style="margin:24px auto;">
+      <div class="final-message-line">நீ என் வாழ்க்கையில் வந்ததற்கு நன்றி.</div>
+      <div class="final-message-line">நீ என் நாட்களை அழகாக்கினாய்.</div>
+      <div class="final-message-line">உன்னை சந்தித்தது என் வாழ்க்கையின் அழகான அதிசயம்.</div>
+      <div class="final-message-line" style="color:var(--petal);">என் மனதில் நீ எப்போதும் ஒரு சிறப்பு இடம் பெற்றிருப்பாய். ❤️</div>
+    </div>
+
+    <div class="final-poem" data-aos="fade-up" data-aos-delay="400">
+      இன்று...<br>
+      நாளை...<br>
+      என்றும்...<br><br>
+      <span style="color:var(--rose);font-size:1.2em;">என் இதயத்தில் நீ. ❤️</span>
+    </div>
+
+    <div data-aos="zoom-in" data-aos-delay="500">
+      <button class="btn-grand" onclick="launchCelebration()">❤️ FOREVER ❤️</button>
+    </div>
+
+    <p style="font-family:var(--font-tamil);color:rgba(255,255,255,0.5);margin-top:40px;font-size:0.9rem;" data-aos="fade-up" data-aos-delay="600">
+      நம்மை சந்திக்க வைத்த விதிக்கு நன்றி. ❤️
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════ CELEBRATION ═══════════════════ -->
+<div id="celebration">
+  <canvas id="confetti-canvas"></canvas>
+  <div style="position:relative;z-index:10;text-align:center;padding:24px;">
+    <div style="font-size:5rem;animation:heartbeat 0.8s ease-in-out infinite;display:block;margin-bottom:24px;">❤️</div>
+    <div class="celebration-text">VELLORE ❤️ KANYAKUMARI</div>
+    <div style="font-size:5rem;margin:16px 0;background:linear-gradient(135deg,var(--rose),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">∞</div>
+    <div class="celebration-sub">நம்மை சந்திக்க வைத்த விதிக்கு நன்றி. ❤️</div>
+    <button id="close-celebration" onclick="closeCelebration()">Close ✕</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════════════════ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+/* ═══════════════════ INIT AOS ═══════════════════ */
+AOS.init({ duration: 800, easing: 'ease-out-cubic', once: false, offset: 80 });
+gsap.registerPlugin(ScrollTrigger);
+
+/* ═══════════════════ LOADING ═══════════════════ */
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loading-screen').classList.add('hidden');
+    initStars();
+    initFloatHearts();
+    initPetalsCanvas();
+    initHeartsCanvas();
+    startFireworks();
+  }, 2800);
+});
+
+/* ═══════════════════ CURSOR ═══════════════════ */
+const cursor = document.getElementById('cursor');
+const trail = document.getElementById('cursor-trail');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+  setTimeout(() => {
+    trail.style.left = e.clientX + 'px';
+    trail.style.top = e.clientY + 'px';
+  }, 80);
+});
+
+/* ═══════════════════ STARS ═══════════════════ */
+function initStars() {
+  const c = document.getElementById('stars-container');
+  for (let i = 0; i < 120; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${2+Math.random()*4}s;--del:${Math.random()*5}s;opacity:${0.2+Math.random()*0.8};width:${1+Math.random()*2}px;height:${1+Math.random()*2}px;`;
+    c.appendChild(s);
+  }
+}
+
+/* ═══════════════════ FLOAT HEARTS ═══════════════════ */
+function initFloatHearts() {
+  const c = document.getElementById('float-hearts');
+  const emojis = ['❤️','💕','💖','💗','💝','🌸','✨','💫'];
+  for (let i = 0; i < 18; i++) {
+    const h = document.createElement('div');
+    h.className = 'float-heart';
+    h.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    h.style.cssText = `left:${Math.random()*100}%;--s:${0.8+Math.random()*1.5}rem;--d:${5+Math.random()*8}s;--del:${Math.random()*8}s;`;
+    c.appendChild(h);
+  }
+}
+
+/* ═══════════════════ PETALS CANVAS ═══════════════════ */
+function initPetalsCanvas() {
+  const canvas = document.getElementById('petals-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+  window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+
+  const petals = Array.from({length:30}, () => ({
+    x: Math.random()*canvas.width, y: Math.random()*canvas.height,
+    size: 4+Math.random()*8, speed: 0.5+Math.random()*1.5,
+    sway: Math.random()*2*Math.PI, swaySpeed: 0.01+Math.random()*0.02,
+    rotation: Math.random()*360, rotSpeed: 0.5+Math.random()*2,
+    opacity: 0.3+Math.random()*0.5, color: Math.random()>0.5?'#FF8FAB':'#FFB3C6'
+  }));
+
+  function drawPetal(ctx, x, y, size, rotation, color, opacity) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(rotation*Math.PI/180);
+    ctx.globalAlpha = opacity;
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, size*0.7, size, 0, 0, Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function animatePetals() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    petals.forEach(p => {
+      p.y += p.speed;
+      p.sway += p.swaySpeed;
+      p.x += Math.sin(p.sway)*0.8;
+      p.rotation += p.rotSpeed;
+      if (p.y > canvas.height + 20) { p.y = -20; p.x = Math.random()*canvas.width; }
+      drawPetal(ctx, p.x, p.y, p.size, p.rotation, p.color, p.opacity);
+    });
+    requestAnimationFrame(animatePetals);
+  }
+  animatePetals();
+}
+
+/* ═══════════════════ HEARTS CANVAS ═══════════════════ */
+function initHeartsCanvas() {
+  const canvas = document.getElementById('hearts-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+  window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+
+  const hearts = [];
+  function spawnHeart() {
+    hearts.push({
+      x: Math.random()*canvas.width, y: canvas.height + 20,
+      size: 6+Math.random()*14, speed: 1+Math.random()*2,
+      opacity: 0.15+Math.random()*0.3, drift: (Math.random()-0.5)*0.8,
+      hue: Math.random()>0.5?'rgba(255,26,108,':'rgba(183,132,255,'
+    });
+  }
+  setInterval(spawnHeart, 400);
+
+  function drawHeart(ctx, x, y, size) {
+    ctx.beginPath();
+    ctx.moveTo(x, y-size*0.3);
+    ctx.bezierCurveTo(x, y-size, x-size, y-size, x-size, y-size*0.3);
+    ctx.bezierCurveTo(x-size, y+size*0.3, x, y+size*0.7, x, y+size);
+    ctx.bezierCurveTo(x, y+size*0.7, x+size, y+size*0.3, x+size, y-size*0.3);
+    ctx.bezierCurveTo(x+size, y-size, x, y-size, x, y-size*0.3);
+    ctx.closePath();
+  }
+
+  function animateHearts() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = hearts.length-1; i>=0; i--) {
+      const h = hearts[i];
+      h.y -= h.speed; h.x += h.drift; h.opacity -= 0.001;
+      if (h.y < -30 || h.opacity <= 0) { hearts.splice(i,1); continue; }
+      ctx.save();
+      ctx.fillStyle = h.hue + h.opacity + ')';
+      drawHeart(ctx, h.x, h.y, h.size);
+      ctx.fill();
+      ctx.restore();
+    }
+    requestAnimationFrame(animateHearts);
+  }
+  animateHearts();
+
+  // Click hearts
+  canvas.style.pointerEvents = 'all';
+  canvas.addEventListener('click', e => {
+    for (let i=0;i<6;i++) {
+      setTimeout(()=>{
+        hearts.push({ x:e.clientX+(Math.random()-0.5)*40, y:e.clientY+(Math.random()-0.5)*40,
+          size:8+Math.random()*16, speed:1.5+Math.random()*2.5, opacity:0.6+Math.random()*0.3,
+          drift:(Math.random()-0.5)*1.5, hue:'rgba(255,26,108,' });
+      }, i*60);
+    }
+  });
+}
+
+/* ═══════════════════ MUSIC PLAYER ═══════════════════ */
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+let oscillators = [], gainNode, playing = false;
+
+function createRomanticTone() {
+  gainNode = audioCtx.createGain();
+  gainNode.gain.value = 0;
+  gainNode.connect(audioCtx.destination);
+
+  const notes = [261.63, 329.63, 392.00, 523.25, 659.25]; // C4 E4 G4 C5 E5
+  oscillators = notes.map((freq, i) => {
+    const osc = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    g.gain.value = 0.08 - i*0.01;
+    osc.connect(g); g.connect(gainNode);
+    osc.start(); return osc;
+  });
+
+  // Melodic pattern
+  let step = 0;
+  const melody = [261.63, 329.63, 392.00, 523.25, 659.25, 523.25, 392.00, 329.63];
+  setInterval(() => {
+    if (!playing) return;
+    oscillators[0].frequency.setValueAtTime(melody[step % melody.length], audioCtx.currentTime);
+    step++;
+  }, 600);
+}
+
+document.getElementById('play-btn').addEventListener('click', () => {
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  if (!gainNode) createRomanticTone();
+  playing = !playing;
+  const btn = document.getElementById('play-btn');
+  const vis = document.getElementById('visualizer');
+  const status = document.getElementById('music-status');
+  if (playing) {
+    gainNode.gain.linearRampToValueAtTime(parseFloat(document.getElementById('vol-slider').value)*0.3, audioCtx.currentTime+0.5);
+    btn.textContent = '⏸'; vis.classList.remove('paused'); status.textContent = 'Playing ♪';
+  } else {
+    gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime+0.3);
+    btn.textContent = '▶'; vis.classList.add('paused'); status.textContent = 'Paused';
+  }
+});
+
+document.getElementById('vol-slider').addEventListener('input', e => {
+  if (gainNode && playing) gainNode.gain.value = e.target.value * 0.3;
+});
+
+/* ═══════════════════ LOVE TIMER ═══════════════════ */
+function updateTimer() {
+  const start = new Date('2024-01-01'); // Adjust to actual date
+  const now = new Date();
+  const diff = Math.floor((now - start)/(1000*60*60*24));
+  document.getElementById('timer-val').textContent = diff + ' Days ❤️';
+}
+updateTimer(); setInterval(updateTimer, 60000);
+
+/* ═══════════════════ NAV DOTS ═══════════════════ */
+const sections = ['page1','page2','page3','page4','page5','page6','page7','page8','page9','page10'];
+const dots = document.querySelectorAll('.nav-dot');
+dots.forEach((dot, i) => dot.addEventListener('click', () => document.getElementById(sections[i]).scrollIntoView({behavior:'smooth'})));
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const idx = sections.indexOf(e.target.id);
+      dots.forEach(d => d.classList.remove('active'));
+      if (idx >= 0) dots[idx].classList.add('active');
+    }
+  });
+}, {threshold: 0.4});
+sections.forEach(id => { const el = document.getElementById(id); if(el) observer.observe(el); });
+
+/* ═══════════════════ REASONS GRID ═══════════════════ */
+const reasons = [
+  {icon:'😊', text:'Your beautiful smile that lights up everything'},
+  {icon:'💕', text:'Your endless kindness and gentle heart'},
+  {icon:'🤝', text:'Your unwavering support in every moment'},
+  {icon:'🌸', text:'Your care that makes me feel so cherished'},
+  {icon:'✨', text:'Your unique and wonderful personality'},
+  {icon:'🕊️', text:'Your honesty that I can always trust'},
+  {icon:'😂', text:'The way you make me laugh so easily'},
+  {icon:'🧠', text:'Your intelligence and thoughtful mind'},
+  {icon:'🌙', text:'Your voice in our late night conversations'},
+  {icon:'💬', text:'Your messages that make my day brighter'},
+  {icon:'🌺', text:'Your grace and natural elegance'},
+  {icon:'🌊', text:'Your depth — there is always more to know'},
+  {icon:'🎯', text:'Your clarity and sense of direction in life'},
+  {icon:'🦋', text:'The way you make ordinary moments magical'},
+  {icon:'🌟', text:'Your presence that calms my restless heart'},
+  {icon:'🎶', text:'Your energy that resonates with mine'},
+  {icon:'🧡', text:'Your empathy for everything around you'},
+  {icon:'🌹', text:'The way you remember little things about me'},
+  {icon:'🔥', text:'Your passion for the things you love'},
+  {icon:'❤️', text:'Simply for being — you, wholly and completely'}
+];
+
+const grid = document.getElementById('reasons-grid');
+reasons.forEach((r, i) => {
+  const card = document.createElement('div');
+  card.className = 'reason-card';
+  card.setAttribute('data-aos', 'zoom-in');
+  card.setAttribute('data-aos-delay', (i%5)*60 + '');
+  card.innerHTML = `<div class="reason-number">0${i<9?'0':''}${i+1}</div><span class="reason-icon">${r.icon}</span><div class="reason-text">${r.text}</div>`;
+  card.addEventListener('click', () => { card.style.transform = 'scale(1.1) rotate(2deg)'; setTimeout(()=>card.style.transform='',300); });
+  grid.appendChild(card);
+});
+
+/* ═══════════════════ PROMISES ═══════════════════ */
+const promises = [
+  {icon:'🫅', title:'Respect', desc:'I will always honour your feelings, your space, and who you are as a person.'},
+  {icon:'🛡️', title:'Trust', desc:'I will be someone you can always count on, in words and actions alike.'},
+  {icon:'💎', title:'Honesty', desc:'I will be transparent with you — always real, never pretending.'},
+  {icon:'🤗', title:'Care', desc:'I will notice when you need support and be there without being asked.'},
+  {icon:'🌱', title:'Support', desc:'Your dreams matter to me. I will encourage you in every step you take.'},
+  {icon:'💐', title:'Appreciation', desc:'I will never take you for granted. You will always know how much you matter.'}
+];
+
+const pg = document.getElementById('promises-grid');
+promises.forEach((p, i) => {
+  const card = document.createElement('div');
+  card.className = 'promise-card';
+  card.setAttribute('data-aos', 'fade-up');
+  card.setAttribute('data-aos-delay', i*80 + '');
+  card.innerHTML = `<span class="promise-icon">${p.icon}</span><div class="promise-title">${p.title}</div><div class="promise-desc">${p.desc}</div>`;
+  pg.appendChild(card);
+});
+
+/* ═══════════════════ DREAMS ═══════════════════ */
+const dreams = [
+  {icon:'🌸', title:'Meet you one day', desc:'The day I get to see your smile in person — that will be one of the most beautiful days of my life.'},
+  {icon:'🌏', title:'Travel together', desc:'Explore the world side by side, creating memories in places we have only dreamed of.'},
+  {icon:'🎉', title:'Celebrate special moments', desc:'Birthdays, achievements, ordinary Tuesdays — every moment becomes a celebration with you.'},
+  {icon:'📸', title:'Create timeless memories', desc:'Fill our lives with photographs, laughter and stories that we will tell forever.'},
+  {icon:'🤝', title:'Support each other always', desc:'Through every storm and every sunshine — growing stronger together, never apart.'},
+  {icon:'🌺', title:'Grow together', desc:'Become better versions of ourselves, inspired by each other every single day.'}
+];
+
+const dl = document.getElementById('dreams-list');
+dreams.forEach((d, i) => {
+  const item = document.createElement('div');
+  item.className = 'dream-item';
+  item.setAttribute('data-aos', 'fade-right');
+  item.setAttribute('data-aos-delay', i*80 + '');
+  item.innerHTML = `<div class="dream-icon">${d.icon}</div><div class="dream-text"><strong>${d.title}</strong><br>${d.desc}</div>`;
+  dl.appendChild(item);
+});
+
+/* ═══════════════════ THANKS ═══════════════════ */
+const thanks = [
+  {icon:'💌', text:'Thank you for every conversation.'},
+  {icon:'😊', text:'Thank you for every smile you gave me.'},
+  {icon:'📸', text:'Thank you for every memory we made.'},
+  {icon:'🌟', text:'Thank you for every moment of kindness.'},
+  {icon:'🌸', text:'Thank you for your beautiful soul.'},
+  {icon:'❤️', text:'Thank you for simply being you.'},
+  {icon:'✨', text:'Thank you for making my days brighter.'},
+  {icon:'🙏', text:'Thank you for entering my life.'}
+];
+
+const tg = document.getElementById('thanks-grid');
+thanks.forEach((t, i) => {
+  const card = document.createElement('div');
+  card.className = 'thank-card';
+  card.setAttribute('data-aos', 'zoom-in');
+  card.setAttribute('data-aos-delay', i*70 + '');
+  card.innerHTML = `<span class="thank-icon">${t.icon}</span><div class="thank-text">${t.text}</div>`;
+  tg.appendChild(card);
+});
+
+/* ═══════════════════ TAMIL QUOTES ═══════════════════ */
+const quotes = [
+  "காதல் என்பது தூரத்தால் தடைபடாதது. ❤️",
+  "உன் நினைவுகள் என் மனதில் என்றும் வாழும். 💕",
+  "சில பெயர்கள் இதயத்தில் தங்கி விடும். ❤️",
+  "நீ இருக்கும் வரை என் உலகம் அழகானது. 🌹",
+  "தூரம் இருந்தாலும் உன்னை உணர்கிறேன். 💖",
+  "என் மகிழ்ச்சியின் காரணம் நீ. ❤️",
+  "வார்த்தைகள் இல்லாமலும் உன்னை புரிந்து கொள்கிறேன். 💝",
+  "காதல் மொழியில் தூரம் இல்லை. ❤️"
+];
+let qi = 0;
+function nextQuote() {
+  const el = document.getElementById('qg-text');
+  el.style.opacity=0;
+  setTimeout(()=>{ el.textContent = quotes[qi++ % quotes.length]; el.style.opacity=1; }, 300);
+}
+document.getElementById('qg-text').style.transition = 'opacity 0.3s';
+nextQuote();
+
+/* ═══════════════════ FIREWORKS (PAGE 10) ═══════════════════ */
+function startFireworks() {
+  const canvas = document.getElementById('fireworks-canvas');
+  const ctx = canvas.getContext('2d');
+  function resize() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const particles = [];
+  function spawnFirework() {
+    const x = Math.random()*canvas.width, y = Math.random()*canvas.height*0.5;
+    const colors = ['#FF1A6C','#FFD700','#B784FF','#FF8FAB','#ffffff','#FFB3C6'];
+    const color = colors[Math.floor(Math.random()*colors.length)];
+    for (let i=0;i<30;i++) {
+      const angle = (i/30)*Math.PI*2;
+      const speed = 1.5+Math.random()*3;
+      particles.push({ x, y, vx:Math.cos(angle)*speed, vy:Math.sin(angle)*speed, color, life:1, size:2+Math.random()*2 });
+    }
+  }
+  setInterval(spawnFirework, 1800);
+
+  function animateFireworks() {
+    ctx.fillStyle = 'rgba(0,0,0,0.12)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    for (let i=particles.length-1;i>=0;i--) {
+      const p = particles[i];
+      p.x+=p.vx; p.y+=p.vy; p.vy+=0.04; p.life-=0.014; p.vx*=0.98;
+      if (p.life<=0) { particles.splice(i,1); continue; }
+      ctx.save(); ctx.globalAlpha=p.life;
+      ctx.fillStyle=p.color;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.size*p.life,0,Math.PI*2); ctx.fill();
+      ctx.restore();
+    }
+    requestAnimationFrame(animateFireworks);
+  }
+  animateFireworks();
+}
+
+/* ═══════════════════ CELEBRATION ═══════════════════ */
+function launchCelebration() {
+  const cel = document.getElementById('celebration');
+  cel.classList.add('active');
+  startConfetti();
+}
+function closeCelebration() {
+  document.getElementById('celebration').classList.remove('active');
+}
+
+function startConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+
+  const particles = [];
+  const shapes = ['❤️','💕','💖','✨','💫','🌸','⭐','💝'];
+  for (let i=0;i<120;i++) {
+    particles.push({
+      x: Math.random()*canvas.width, y: Math.random()*canvas.height-canvas.height,
+      vx: (Math.random()-0.5)*4, vy: 1+Math.random()*4,
+      emoji: shapes[Math.floor(Math.random()*shapes.length)],
+      size: 16+Math.random()*16, rotation: Math.random()*360, rotSpeed: (Math.random()-0.5)*5,
+      opacity: 0.8+Math.random()*0.2
+    });
+  }
+
+  let running = true;
+  function draw() {
+    if (!running) return;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach(p => {
+      p.y+=p.vy; p.x+=p.vx; p.rotation+=p.rotSpeed;
+      if (p.y>canvas.height+30) { p.y=-30; p.x=Math.random()*canvas.width; }
+      ctx.save(); ctx.globalAlpha=p.opacity; ctx.font=p.size+'px serif';
+      ctx.translate(p.x,p.y); ctx.rotate(p.rotation*Math.PI/180);
+      ctx.fillText(p.emoji,-p.size/2,-p.size/2);
+      ctx.restore();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+
+  document.getElementById('close-celebration').addEventListener('click', ()=>{ running=false; }, {once:true});
+}
+
+/* ═══════════════════ GSAP SCROLL ═══════════════════ */
+gsap.utils.toArray('.page-section').forEach((section, i) => {
+  gsap.fromTo(section.querySelector('.glass-card, .love-letter') || section,
+    { y: 30, opacity: 0.8 },
+    { y: 0, opacity: 1, duration: 0.8, ease:'power2.out',
+      scrollTrigger: { trigger: section, start: 'top 80%', toggleActions: 'play none none reverse' }
+    }
+  );
+});
+
+/* Heart click spawn on document */
+document.addEventListener('click', e => {
+  if (e.target.tagName === 'BUTTON' || e.target.tagName === 'A') return;
+  const el = document.createElement('div');
+  el.textContent = ['❤️','💕','💖','✨'][Math.floor(Math.random()*4)];
+  el.style.cssText = `position:fixed;left:${e.clientX}px;top:${e.clientY}px;font-size:1.4rem;pointer-events:none;z-index:9999;transition:all 1s ease;transform:translate(-50%,-50%)`;
+  document.body.appendChild(el);
+  setTimeout(()=>{ el.style.transform='translate(-50%,-120px)'; el.style.opacity='0'; }, 50);
+  setTimeout(()=>el.remove(), 1100);
+});
+</script>
+</body>
+</html>
